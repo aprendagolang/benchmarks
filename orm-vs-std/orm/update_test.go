@@ -10,11 +10,14 @@ func BenchmarkUpdateORM(b *testing.B) {
 
 	categories := InsertBenchORM(db, b.N)
 
+	b.ResetTimer()
+	b.StopTimer()
 	for i := 0; i < b.N; i++ {
 		category := categories[i]
 		category.Name = fmt.Sprintf("Update Category %d", i)
-		b.ResetTimer()
 
+		b.StartTimer()
 		_ = UpdateORM(db, category)
+		b.StopTimer()
 	}
 }
