@@ -3,11 +3,10 @@ package orm
 import (
 	"fmt"
 	"github.com/aprendagolang/benchmark-orm-vs-std/entities"
+	"gorm.io/gorm"
 )
 
-func InsertBenchORM(size int) []entities.Category {
-	c := setup()
-
+func InsertBenchORM(db *gorm.DB, size int) []entities.Category {
 	categories := make([]entities.Category, size)
 	for i := 0; i < size; i++ {
 		category := entities.Category{
@@ -15,7 +14,7 @@ func InsertBenchORM(size int) []entities.Category {
 			Description: fmt.Sprintf("Description %d", i),
 		}
 
-		cat, err := InsertORM(c, category)
+		cat, err := InsertORM(db, category)
 		if err != nil {
 			panic(err)
 		}

@@ -1,13 +1,12 @@
 package std
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/aprendagolang/benchmark-orm-vs-std/entities"
 )
 
-func InsertBenchStd(size int) []entities.Category {
-	c := setup()
-
+func InsertBenchStd(db *sql.DB, size int) []entities.Category {
 	categories := make([]entities.Category, size)
 	for i := 0; i < size; i++ {
 		category := entities.Category{
@@ -15,7 +14,7 @@ func InsertBenchStd(size int) []entities.Category {
 			Description: fmt.Sprintf("Description %d", i),
 		}
 
-		cat, err := InsertStd(c, category)
+		cat, err := InsertStd(db, category)
 		if err != nil {
 			panic(err)
 		}

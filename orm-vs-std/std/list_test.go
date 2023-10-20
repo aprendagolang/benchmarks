@@ -3,13 +3,13 @@ package std
 import "testing"
 
 func BenchmarkListStd(b *testing.B) {
-	c := setup()
+	db := setup()
 
-	_ = InsertBenchStd(b.N)
+	_ = InsertBenchStd(db, b.N)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, err := ListStd(c)
+		_, err := ListStd(db)
 
 		b.StopTimer()
 		if err != nil {

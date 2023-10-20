@@ -3,13 +3,13 @@ package orm
 import "testing"
 
 func BenchmarkGetORM(b *testing.B) {
-	c := setup()
+	db := setup()
 
-	categories := InsertBenchORM(b.N)
+	categories := InsertBenchORM(db, b.N)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, err := GetORM(c, categories[i].ID)
+		_, err := GetORM(db, categories[i].ID)
 
 		b.StopTimer()
 		if err != nil {

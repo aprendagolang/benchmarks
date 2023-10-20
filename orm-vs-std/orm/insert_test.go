@@ -6,7 +6,7 @@ import (
 )
 
 func BenchmarkInsertORM(b *testing.B) {
-	c := setup()
+	db := setup()
 
 	category := entities.Category{
 		Name:        "Category 1",
@@ -15,7 +15,7 @@ func BenchmarkInsertORM(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, err := InsertORM(c, category)
+		_, err := InsertORM(db, category)
 
 		b.StopTimer()
 		if err != nil {
