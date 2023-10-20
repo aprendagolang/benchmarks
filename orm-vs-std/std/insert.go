@@ -6,14 +6,9 @@ import (
 )
 
 func InsertStd(db *sql.DB, data entities.Category) (entities.Category, error) {
-	result, err := db.Exec("INSERT INTO categories (name, description) VALUES ($1, $2)", data.Name, data.Description)
+	err := db.QueryRow("INSERT INTO categories (name, description) VALUES ($1, $2) RETURNING id", data.Name, data.Description).Scan(&data.ID)
 	if err != nil {
 		return data, err
-	}
-
-	data.ID, err = result.LastInsertId()
-	if err != nil {
-		panic(err)
 	}
 
 	return data, nil

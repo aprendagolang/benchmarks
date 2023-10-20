@@ -7,7 +7,7 @@ import (
 
 func ListStd(db *sql.DB) ([]entities.Category, error) {
 	var categories []entities.Category
-	rows, err := db.Query("SELECT id, name, description FROM category")
+	rows, err := db.Query("SELECT id, name, description FROM categories")
 	if err != nil {
 		return nil, err
 	}

@@ -7,7 +7,7 @@ import (
 
 func GetStd(db *sql.DB, id int64) (*entities.Category, error) {
 	var category entities.Category
-	err := db.QueryRow("SELECT id, name FROM categories WHERE id = ?", id).
+	err := db.QueryRow("SELECT id, name, description FROM categories WHERE id = $1", id).
 		Scan(&category.ID, &category.Name, &category.Description)
 
 	if err != nil {

@@ -2,14 +2,18 @@ package orm
 
 import (
 	"github.com/aprendagolang/benchmark-orm-vs-std/entities"
-	"gorm.io/driver/sqlite" // Sqlite driver based on CGO
-	// "github.com/glebarez/sqlite" // Pure go SQLite driver, checkout https://github.com/glebarez/sqlite for details
+
+	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 // github.com/mattn/go-sqlite3
 func setup() *gorm.DB {
-	db, err := gorm.Open(sqlite.Open("bench_orm.db"), &gorm.Config{})
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DriverName: "postgres",
+		DSN:        "host=localhost port=5432 user=postgres password=1234 dbname=benchmark sslmode=disable",
+	}), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
